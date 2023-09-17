@@ -6,9 +6,7 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 public class AuthenticationTest {
-	
 	Authentication authentication;
-
 
 	@Test
 	public void logarUsuarioNoSistema() {
