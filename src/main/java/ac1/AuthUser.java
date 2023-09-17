@@ -8,22 +8,22 @@ public class AuthUser {
 	private int failTries;
 	
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AuthUser username = (AuthUser) o;
-        return Objects.equals(user, username.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(user);
-    }
-    
-    @Override
-    public String toString() {
-        return "AuthUser [username=" + user + ", password=" + password + "]";
-    }
+	public boolean equals(Object o) {
+	if (this == o) return true;
+	if (o == null || getClass() != o.getClass()) return false;
+	AuthUser username = (AuthUser) o;
+	return Objects.equals(user, username.user);
+	}
+	
+	@Override
+	public int hashCode() {
+	return Objects.hash(user);
+	}
+	
+	@Override
+	public String toString() {
+	return "AuthUser [username=" + user + ", password=" + password + "]";
+	}
 	
 	public AuthUser(String user, String password) {
 		this.user = user;
