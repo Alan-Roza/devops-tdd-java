@@ -22,7 +22,7 @@ public class Authentication {
 	public ValidationResult validate(String user, String password) {
 		int limitTriesToBlockUser = 6;
 		
-		if (user == null || user.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+		if (user == null || user.trim().length() == 0|| password == null || password.trim().length() == 0) {
 			return new ValidationResult(false, "Usuário e Senha são obrigatórios");
 		} 
 		
