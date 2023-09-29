@@ -22,8 +22,12 @@ public class Authentication {
 	public ValidationResult validate(String user, String password) {
 		int limitTriesToBlockUser = 6;
 		
-		if (user.isEmpty() || password.isEmpty()) {
-			return new ValidationResult(false, "Usuário e Senha são obrigatórios");
+		if (user == null || user.isEmpty()) {
+		    return new ValidationResult(false, "Usuário é obrigatório");
+		}
+
+		if (password == null || password.isEmpty()) {
+		    return new ValidationResult(false, "Senha é obrigatória");
 		}
 		
 		for (AuthUser authUser : getDatabaseUsers()) {
