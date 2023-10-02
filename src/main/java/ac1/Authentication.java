@@ -22,24 +22,30 @@ public class Authentication {
 	public ValidationResult validate(String user, String password) {
 		int limitTriesToBlockUser = 6;
 		
-		if (user != null && !user.trim().isEmpty() || password != null && !password.trim().isEmpty()) {
-			for (AuthUser authUser : getDatabaseUsers()) {
-				if (authUser.getUser().equals(user)) {
-					if (authUser.getFailTries() >= limitTriesToBlockUser) {
-						return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
-					}
-					if (authUser.getPassword().equals(password)) {					
-						authUser.setFailTries(0);
-						return new ValidationResult(true, null);
-					}
-					authUser.setFailTries(authUser.getFailTries()+1);	
-				}
-			}
+		try {
 			
-			return new ValidationResult(false, "Usuário ou Senha inválidos!");
-		} 
+			if (user != null && !user.trim().isEmpty() || password != null && !password.trim().isEmpty()) {
+				for (AuthUser authUser : getDatabaseUsers()) {
+					if (authUser.getUser().equals(user)) {
+						if (authUser.getFailTries() >= limitTriesToBlockUser) {
+							return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
+						}
+						if (authUser.getPassword().equals(password)) {					
+							authUser.setFailTries(0);
+							return new ValidationResult(true, null);
+						}
+						authUser.setFailTries(authUser.getFailTries()+1);	
+					}
+				}
+				
+				return new ValidationResult(false, "Usuário ou Senha inválidos!");
+			} 
+		} catch(Exception e) {			
+			return new ValidationResult(false, "Usuário e Senha são obrigatórios");		
+		}
+		return new ValidationResult(false, "Usuário e Senha são obrigatórios");
 		
-		return new ValidationResult(false, "Usuário e Senha são obrigatórios");		
+		
 	}
 
 
