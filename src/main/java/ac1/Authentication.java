@@ -26,7 +26,7 @@ public class Authentication {
 			return new ValidationResult(false, "Usuário e Senha são obrigatórios");		
 		}
 		
-		if (!user.trim().isEmpty() || !password.trim().isEmpty()) {
+		if (user.trim() != "" || password.trim() != "") {
 			for (AuthUser authUser : getDatabaseUsers()) {
 				if (authUser.getUser().equals(user.trim())) {
 					if (authUser.getFailTries() >= limitTriesToBlockUser) {
