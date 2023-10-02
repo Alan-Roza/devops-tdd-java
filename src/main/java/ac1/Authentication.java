@@ -20,28 +20,31 @@ public class Authentication {
 
 
 	public ValidationResult validate(String user, String password) {
-	    int limitTriesToBlockUser = 6;
-	    
-	    if (user == null || user.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+	    if (areCredentialsMissing(user, password)) {
 	        return new ValidationResult(false, "Usuário e Senha são obrigatórios");
 	    }
 
 	    AuthUser authUser = findUserInDatabase(user.trim());
 
-	    if (authUser != null) {
-	        if (authUser.getFailTries() >= limitTriesToBlockUser) {
-	            return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
-	        }
-
-	        if (authUser.getPassword().equals(password.trim())) {                                        
-	            authUser.setFailTries(0);
-	            return new ValidationResult(true, null);
-	        }
-
-	        authUser.setFailTries(authUser.getFailTries() + 1);
+	    if (authUser == null) {
+	        return new ValidationResult(false, "Usuário ou Senha inválidos!");
 	    }
 
+	    if (isUserBlocked(authUser)) {
+	        return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
+	    }
+
+	    if (isPasswordValid(authUser, password.trim())) {
+	        authUser.setFailTries(0);
+	        return new ValidationResult(true, null);
+	    }
+
+	    authUser.setFailTries(authUser.getFailTries() + 1);
 	    return new ValidationResult(false, "Usuário ou Senha inválidos!");
+	}
+
+	private boolean areCredentialsMissing(String user, String password) {
+	    return user == null || user.trim().isEmpty() || password == null || password.trim().isEmpty();
 	}
 
 	private AuthUser findUserInDatabase(String username) {
@@ -51,6 +54,15 @@ public class Authentication {
 	        }
 	    }
 	    return null;
+	}
+
+	private boolean isUserBlocked(AuthUser authUser) {
+	    int limitTriesToBlockUser = 6;
+	    return authUser.getFailTries() >= limitTriesToBlockUser;
+	}
+
+	private boolean isPasswordValid(AuthUser authUser, String password) {
+	    return authUser.getPassword().equals(password);
 	}
 
 
