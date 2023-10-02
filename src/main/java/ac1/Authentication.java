@@ -26,22 +26,18 @@ public class Authentication {
 			return new ValidationResult(false, "Usuário e Senha são obrigatórios");		
 		}
 		
-		if (!user.trim().isEmpty() || !password.trim().isEmpty()) {
+		if ((!user.trim().isEmpty() || !password.trim().isEmpty()) && !getDatabaseUsers().isEmpty()) {
 			for (AuthUser authUser : getDatabaseUsers()) {
-				if (!authUser.getUser().equals(user.trim())) {
-					return new ValidationResult(false, "Usuário ou Senha inválidos!");
+				if (authUser.getUser().equals(user.trim())) {
+					if (authUser.getFailTries() >= limitTriesToBlockUser) {
+						return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
+					}
+					if (authUser.getPassword().equals(password.trim())) {					
+						authUser.setFailTries(0);
+						return new ValidationResult(true, null);
+					}
+					authUser.setFailTries(authUser.getFailTries()+1);	
 				}
-				
-				if (authUser.getFailTries() >= limitTriesToBlockUser) {
-					return new ValidationResult(false, "Credencial bloqueada temporariamente, tente novamente em 3 horas.");
-				}
-				
-				if (authUser.getPassword().equals(password.trim())) {					
-					authUser.setFailTries(0);
-					return new ValidationResult(true, null);
-				}
-				
-				authUser.setFailTries(authUser.getFailTries()+1);	
 			}
 			
 			return new ValidationResult(false, "Usuário ou Senha inválidos!");
