@@ -65,7 +65,7 @@ public class AuthenticationTest {
         Authentication sut = new Authentication();
         
         // Action
-        ValidationResult isValidResult = sut.validate(null, null);
+        ValidationResult isValidResult = sut.validate("", null);
         boolean isValidCredentials = isValidResult.isValid();
         String errorMessage = isValidResult.getErrorMessage();
         
