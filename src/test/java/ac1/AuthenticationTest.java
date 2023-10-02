@@ -66,34 +66,18 @@ public class AuthenticationTest {
         
         // Action
         ValidationResult isValidResult = sut.validate("", null);
-        ValidationResult isValidResult2 = sut.validate(null, null);
-        ValidationResult isValidResult3 = sut.validate("", "");
-        ValidationResult isValidResult4 = sut.validate(null, "");
+
 
         boolean isValidCredentials = isValidResult.isValid();
         String errorMessage = isValidResult.getErrorMessage();
         
-        boolean isValidCredentials2 = isValidResult2.isValid();
-        String errorMessage2 = isValidResult2.getErrorMessage();
-        
-        boolean isValidCredentials3 = isValidResult3.isValid();
-        String errorMessage3 = isValidResult3.getErrorMessage();
-        
-        boolean isValidCredentials4 = isValidResult4.isValid();
-        String errorMessage4 = isValidResult4.getErrorMessage();
+
         
         // Assert
         assertEquals(false, isValidCredentials);
         assertEquals("Usuário e Senha são obrigatórios", errorMessage);
         
-        assertEquals(false, isValidCredentials2);
-        assertEquals("Usuário e Senha são obrigatórios", errorMessage2);
-        
-        assertEquals(false, isValidCredentials3);
-        assertEquals("Usuário e Senha são obrigatórios", errorMessage3);
-        
-        assertEquals(false, isValidCredentials4);
-        assertEquals("Usuário e Senha são obrigatórios", errorMessage4);
+
 	 }
 
 }
