@@ -22,7 +22,7 @@ public class Authentication {
 	public ValidationResult validate(String user, String password) {
 		int limitTriesToBlockUser = 6;
 		
-		if (!user.trim().isEmpty() || !password.trim().isEmpty()) {
+		if (user != null && !user.trim().isEmpty() || password != null && !password.trim().isEmpty()) {
 			for (AuthUser authUser : getDatabaseUsers()) {
 				if (authUser.getUser().equals(user)) {
 					if (authUser.getFailTries() >= limitTriesToBlockUser) {
@@ -39,11 +39,7 @@ public class Authentication {
 			return new ValidationResult(false, "Usuário ou Senha inválidos!");
 		} 
 		
-		return new ValidationResult(false, "Usuário e Senha são obrigatórios");
-		
-		
-		
-		
+		return new ValidationResult(false, "Usuário e Senha são obrigatórios");		
 	}
 
 
