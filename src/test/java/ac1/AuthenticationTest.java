@@ -14,7 +14,7 @@ public class AuthenticationTest {
         Authentication sut = new Authentication();
         
         // Action
-        ValidationResult isValidResult = sut.validate("Admin", "adminPassword");
+        ValidationResult isValidResult = sut.validate("Admin", "adminPassword ");
         boolean isCredentialsValid = isValidResult.isValid();
         String errorMessage = isValidResult.getErrorMessage();
         
@@ -69,7 +69,7 @@ public class AuthenticationTest {
         ValidationResult isValidResult2 = sut.validate(null, null);
         ValidationResult isValidResult3 = sut.validate("", "");
         ValidationResult isValidResult4 = sut.validate(null, "");
-        ValidationResult isValidResult5 = sut.validate(" ", " ");
+        ValidationResult isValidResult5 = sut.validate("   ", " ");
 
         boolean isValidCredentials = isValidResult.isValid();
         String errorMessage = isValidResult.getErrorMessage();
