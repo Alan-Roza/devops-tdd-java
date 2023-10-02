@@ -35,7 +35,7 @@ public class AuthenticationTest {
         
         // Assert
         assertEquals(false, isValidCredentials);
-        assertEquals("Invalid user or password", errorMessage);
+        assertEquals("Usuário ou Senha inválidos!", errorMessage);
 	 }
 	
 	@Test
@@ -54,7 +54,7 @@ public class AuthenticationTest {
         	    assertEquals("Credencial bloqueada temporariamente, tente novamente em 3 horas.", isValidCredentials.getErrorMessage());
         	} else {
         		assertEquals(false, isValidCredentials.isValid());
-        		assertEquals("Invalid user or password", isValidCredentials.getErrorMessage());        		
+        		assertEquals("Usuário ou Senha inválidos!", isValidCredentials.getErrorMessage());        		
         	}
         }
 	}
